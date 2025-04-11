@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maui.MemoryLeaksTests.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+            <Editor x:Name="ResultsEditor" HeightRequest="280"/>
+
+            <Button
+                x:Name="CounterBtn"
+                Text="Test Control" 
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="OnCounterClicked"
+                HorizontalOptions="Fill" />
+
+            <Button x:Name="TestWindowButton"
+                    Text="Test Window"
+                    Clicked="TestWindowButton_Clicked"/>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
