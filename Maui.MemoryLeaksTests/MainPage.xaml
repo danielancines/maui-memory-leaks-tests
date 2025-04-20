@@ -1,26 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Maui.MemoryLeaksTests"
+             xmlns:viewModel="clr-namespace:Maui.MemoryLeaksTests.ViewModel"
+             x:DataType="viewModel:MainPageViewModel"
              x:Class="Maui.MemoryLeaksTests.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
-
-            <Editor x:Name="ResultsEditor" HeightRequest="280"/>
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Test Control" 
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Fill" />
-
-            <Button x:Name="TestWindowButton"
-                    Text="Test Window"
-                    Clicked="TestWindowButton_Clicked"/>
-        </VerticalStackLayout>
+        <Grid RowDefinitions="*,auto">
+            
+            <VerticalStackLayout Padding="30,0"
+                                 Spacing="25">
+                <Button Text="Call Garbage Collector"
+                        Command="{Binding CallGarbageCollectorCommand, Mode=OneTime}"/>
+                <Button Text="Create Transient Classes"
+                        Command="{Binding CreateTransientClassesCommand, Mode=OneTime}"/>
+                <Button Text="Clear Scope"
+                        Command="{Binding ClearScopedCommand, Mode=OneTime}"/>
+            </VerticalStackLayout>
+            <Editor x:Name="ResultsEditor" 
+                    Margin="8"
+                    HeightRequest="280"
+                    Grid.Row="1"/>
+        </Grid>
     </ScrollView>
 
 </ContentPage>
