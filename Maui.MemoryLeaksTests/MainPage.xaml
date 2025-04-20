@@ -3,12 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Maui.MemoryLeaksTests"
              xmlns:viewModel="clr-namespace:Maui.MemoryLeaksTests.ViewModel"
+             xmlns:behaviors="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewModel:MainPageViewModel"
-             x:Class="Maui.MemoryLeaksTests.MainPage">
-
+             x:Class="Maui.MemoryLeaksTests.MainPage"
+             x:Name="MainContentPage">
     <ScrollView>
+        <ScrollView.Behaviors>
+            <behaviors:EventToCommandBehavior EventName="Loaded" 
+                                              BindingContext="{Binding Source={x:Reference MainContentPage}, Path=BindingContext}"
+                                              Command="{Binding ViewLoadedCommand}"/>
+        </ScrollView.Behaviors>
         <Grid RowDefinitions="*,auto">
-            
             <VerticalStackLayout Padding="30,0"
                                  Spacing="25">
                 <Button Text="Call Garbage Collector"

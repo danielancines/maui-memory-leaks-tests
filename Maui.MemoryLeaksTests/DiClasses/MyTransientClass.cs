@@ -7,10 +7,11 @@ public sealed class MyTransientClass : IDisposable, IDIClass
 {
     private readonly ICustomLogger _customLogger;
 
-    public MyTransientClass(ICustomLogger customLogger)
+    public MyTransientClass(ICustomLogger customLogger, IServiceProvider serviceProvider)
     {
         this._customLogger = customLogger;
         this._customLogger.LogInformation($"{this.Id} - Transient Class Created");
+        this._customLogger.LogInformation($"MyTransientClass ServiceProvider: {serviceProvider.GetHashCode()}");
     }
 
     public Guid Id { get; } = Guid.NewGuid();

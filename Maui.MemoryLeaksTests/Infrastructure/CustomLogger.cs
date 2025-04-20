@@ -18,7 +18,7 @@ public sealed class CustomLogger : ICustomLogger
         if (this._inputView == null)
             return;
 
-        this._inputView.Text += $"{DateTime.Now.TimeOfDay}: {formatter(state, exception)}\n";
+        this._inputView.Text += $"{DateTime.Now.ToString("T")}: {formatter(state, exception)}\n";
     }
 
     public void SetInputView(InputView inputView)

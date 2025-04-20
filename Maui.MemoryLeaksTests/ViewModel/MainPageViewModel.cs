@@ -11,7 +11,7 @@ public sealed class MainPageViewModel : BaseViewModel
     #region Fields
 
     private readonly ICustomLogger _logger;
-    private readonly IServiceProvider _hostServideProvider;
+    private readonly IServiceProvider _hostServiceProvider;
     private IServiceScope? _scope;
     private IServiceProvider? _scopeServiceProvider;
 
@@ -19,13 +19,12 @@ public sealed class MainPageViewModel : BaseViewModel
 
     #region Constructor
 
-    public MainPageViewModel(MyTransientClass myTransientClass, ICustomLogger logger, IServiceProvider hostServideProvider)
+    public MainPageViewModel(MyTransientClass myTransientClass, ICustomLogger logger, IServiceProvider hostServiceProvider)
     {
         this.InitializeCommands();
         this._logger = logger;
-        this._hostServideProvider = hostServideProvider;
-
-        this._scope = hostServideProvider.CreateScope();
+        this._hostServiceProvider = hostServiceProvider;
+        this._scope = hostServiceProvider.CreateScope();
         this._scopeServiceProvider = this._scope.ServiceProvider;
     }
 
@@ -39,7 +38,19 @@ public sealed class MainPageViewModel : BaseViewModel
 
     #endregion
 
-    #region private Methods
+    #region Public Methods
+
+    public override void OnViewLoaded(object? obj)
+    {
+        this._logger.LogInformation($"HostServiceProvider: {this._hostServiceProvider.GetHashCode()}");
+        this._logger.LogInformation($"ScopeServiceProvider: {this._scopeServiceProvider?.GetHashCode()}");
+
+        base.OnViewLoaded(obj);
+    }
+
+    #endregion
+
+    #region Private Methods
     private void InitializeCommands()
     {
         this.CallGarbageCollectorCommand = new ObservableCommand(OnCallGarbageCollector);
@@ -50,7 +61,7 @@ public sealed class MainPageViewModel : BaseViewModel
     private void OnClearScope(object? obj)
     {
         //Optional if you want to dispose all disposable resolved objects
-        //this._scope?.Dispose();
+        this._scope?.Dispose();
 
         this._scope = null;
         this._scopeServiceProvider = null;
@@ -61,7 +72,7 @@ public sealed class MainPageViewModel : BaseViewModel
     {
         for (int i = 0; i < 2; i++)
         {
-            _ = this._hostServideProvider.GetService<MyTransientClass>();
+            _ = this._hostServiceProvider.GetService<MyTransientClass>();
             _ = this._scopeServiceProvider?.GetService<MyTransientClass>();
         }
 
