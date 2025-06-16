@@ -13,9 +13,9 @@
                                               BindingContext="{Binding Source={x:Reference MainContentPage}, Path=BindingContext}"
                                               Command="{Binding ViewLoadedCommand}"/>
         </ScrollView.Behaviors>
-        <Grid RowDefinitions="*,auto">
-            <VerticalStackLayout Padding="30,0"
-                                 Spacing="25">
+        <Grid RowDefinitions="auto, *"
+              Padding="8,0">
+            <VerticalStackLayout Spacing="25">
                 <Button Text="Call Garbage Collector"
                         Command="{Binding CallGarbageCollectorCommand, Mode=OneTime}"/>
                 <Button Text="Create Transient Classes"
@@ -24,8 +24,7 @@
                         Command="{Binding ClearScopedCommand, Mode=OneTime}"/>
             </VerticalStackLayout>
             <Editor x:Name="ResultsEditor" 
-                    Margin="8"
-                    HeightRequest="280"
+                    Margin="0,8"
                     Grid.Row="1"/>
         </Grid>
     </ScrollView>
